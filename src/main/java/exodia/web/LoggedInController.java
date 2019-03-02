@@ -3,31 +3,36 @@ package exodia.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class LoggedInController {
 
     @GetMapping("/home")
-    public String home(){
+    public ModelAndView home(ModelAndView modelAndView){
+        modelAndView.setViewName("home");
 
-        return "home";
+        return modelAndView;
     }
 
     @GetMapping("/schedule")
-    public String schedule(){
+    public ModelAndView schedule(ModelAndView modelAndView){
+        modelAndView.setViewName("schedule");
 
-        return "schedule";
+        return modelAndView;
     }
 
     @GetMapping("/print")
-    public String print(){
+    public ModelAndView print(ModelAndView modelAndView){
+        modelAndView.setViewName("print");
 
-        return "print";
+        return modelAndView;
     }
 
     @GetMapping("/details")
-    public String details(){
+    public ModelAndView details(ModelAndView modelAndView){
+        modelAndView.setViewName("details");
 
-        return "details";
+        return modelAndView;
     }
 }

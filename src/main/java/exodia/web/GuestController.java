@@ -2,23 +2,29 @@ package exodia.web;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 @Controller
 public class GuestController {
 
     @GetMapping("/")
-    public String index(){
-        return "index";
+    public ModelAndView index(ModelAndView modelAndView){
+        modelAndView.setViewName("index");
+
+        return modelAndView;
     }
 
     @GetMapping("/login")
-    public String login(){
-        return "login";
+    public ModelAndView login(ModelAndView modelAndView){
+        modelAndView.setViewName("login");
+
+        return modelAndView;
     }
 
     @GetMapping("/register")
-    public String register(){
+    public ModelAndView register(ModelAndView modelAndView){
+        modelAndView.setViewName("register");
 
-        return "register";
+        return modelAndView;
     }
 }
