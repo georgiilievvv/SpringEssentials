@@ -1,6 +1,4 @@
-package domain.models.service;
-
-import java.util.List;
+package exodia.domain.models.service;
 
 public class UserServiceModel {
 

@@ -1,12 +1,12 @@
-package domain.models.view;
+package exodia.domain.models.service;
 
-public class DocumentDetailsViewModel {
+public class DocumentServiceModel {
 
     private String id;
     private String title;
     private String content;
 
-    public DocumentDetailsViewModel() {
+    public DocumentServiceModel() {
     }
 
     public String getId() {

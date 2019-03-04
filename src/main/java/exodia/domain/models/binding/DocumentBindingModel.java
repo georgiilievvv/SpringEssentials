@@ -1,20 +1,11 @@
-package domain.models.service;
+package exodia.domain.models.binding;
 
-public class DocumentServiceModel {
+public class DocumentBindingModel {
 
-    private String id;
     private String title;
     private String content;
 
-    public DocumentServiceModel() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public DocumentBindingModel() {
     }
 
     public String getTitle() {

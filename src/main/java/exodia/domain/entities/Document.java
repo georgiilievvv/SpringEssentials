@@ -1,4 +1,4 @@
-package domain.entities;
+package exodia.domain.entities;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

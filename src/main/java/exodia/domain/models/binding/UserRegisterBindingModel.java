@@ -1,4 +1,7 @@
-package domain.models.binding;
+package exodia.domain.models.binding;
+
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class UserRegisterBindingModel {
 
@@ -10,6 +13,8 @@ public class UserRegisterBindingModel {
     public UserRegisterBindingModel() {
     }
 
+    @NotNull
+    @NotEmpty
     public String getUsername() {
         return username;
     }
@@ -18,6 +23,8 @@ public class UserRegisterBindingModel {
         this.username = username;
     }
 
+    @NotNull
+    @NotEmpty
     public String getPassword() {
         return password;
     }
@@ -26,6 +33,8 @@ public class UserRegisterBindingModel {
         this.password = password;
     }
 
+    @NotNull
+    @NotEmpty
     public String getConfirmPassword() {
         return confirmPassword;
     }
@@ -34,6 +43,8 @@ public class UserRegisterBindingModel {
         this.confirmPassword = confirmPassword;
     }
 
+    @NotNull
+    @NotEmpty
     public String getEmail() {
         return email;
     }

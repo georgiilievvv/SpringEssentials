@@ -1,4 +1,4 @@
-package domain.models.view;
+package exodia.domain.models.view;
 
 public class DocumentHomeViewModel {
 
