@@ -23,16 +23,20 @@ public class DocumentServiceImpl implements DocumentService{
     }
 
     @Override
-    public boolean saveDocument(DocumentServiceModel DocumentServiceModel) {
-        Document Document = this.modelMapper.map(DocumentServiceModel, Document.class);
+    public DocumentServiceModel saveDocument(DocumentServiceModel model) {
+        Document Document = this.modelMapper.map(model, Document.class);
 
-        return this.DocumentRepository
-                .save(Document) != null;
+        try {
+            Document document = this.DocumentRepository.saveAndFlush(Document);
+            return this.modelMapper.map(document, DocumentServiceModel.class);
+        }catch (Exception e){
+            return null;
+        }
     }
 
     @Override
-    public void removeDocument(String id) {
-
+    public void removeDocumentById(String id) {
+            this.DocumentRepository.deleteById(id);
     }
 
     @Override
@@ -44,6 +48,9 @@ public class DocumentServiceImpl implements DocumentService{
 
     @Override
     public DocumentServiceModel findById(String id) {
-        return this.modelMapper.map(this.DocumentRepository.findById(id), DocumentServiceModel.class);
+        Document document = this.DocumentRepository.findById(id).orElse(null);
+
+        assert document != null;
+        return this.modelMapper.map(document, DocumentServiceModel.class);
     }
 }

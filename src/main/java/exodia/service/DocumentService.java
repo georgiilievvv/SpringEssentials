@@ -6,9 +6,9 @@ import java.util.List;
 
 public interface DocumentService {
 
-    boolean saveDocument(DocumentServiceModel userServiceModel);
+    DocumentServiceModel saveDocument(DocumentServiceModel userServiceModel);
 
-    void removeDocument(String id);
+    void removeDocumentById(String id);
 
     List<DocumentServiceModel> findAllDocuments();
 

@@ -13,3 +13,8 @@
 textarea {
     resize: none;
 }
+
+.home-doc {
+    width: 16%;
+    margin: 0 4% 1% 0;
+}

@@ -50,7 +50,7 @@ public class GuestController {
         if (this.loginModelIsValid(model) && serviceModel != null){
 
             session.setAttribute("userId", serviceModel.getId());
-            modelAndView.setViewName("home");
+            modelAndView.setViewName("redirect:/home");
 
         }else {
             modelAndView.setViewName("redirect:/login");
