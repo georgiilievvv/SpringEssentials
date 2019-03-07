@@ -10,7 +10,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.SessionAttribute;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
@@ -31,14 +30,24 @@ public class GuestController {
     }
 
     @GetMapping("")
-    public ModelAndView index(ModelAndView modelAndView){
+    public ModelAndView index(ModelAndView modelAndView, HttpSession session) {
+        if (session.getAttribute("userId") != null) {
+            modelAndView.setViewName("redirect:/home");
+            return modelAndView;
+        }
+
         modelAndView.setViewName("index");
 
         return modelAndView;
     }
 
     @GetMapping("login")
-    public ModelAndView login(ModelAndView modelAndView){
+    public ModelAndView login(ModelAndView modelAndView, HttpSession session) {
+        if (session.getAttribute("userId") != null) {
+            modelAndView.setViewName("redirect:/home");
+            return modelAndView;
+        }
+
         modelAndView.setViewName("login");
         return modelAndView;
     }
@@ -63,8 +72,12 @@ public class GuestController {
     }
 
     @GetMapping("register")
-    public ModelAndView register(ModelAndView modelAndView){
-
+    public ModelAndView register(ModelAndView modelAndView, HttpSession session) {
+        if (session.getAttribute("userId") != null) {
+            modelAndView.setViewName("redirect:/home");
+            return modelAndView;
+        }
+        
         modelAndView.setViewName("register");
 
         return modelAndView;

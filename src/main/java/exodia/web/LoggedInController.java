@@ -34,37 +34,43 @@ public class LoggedInController {
     }
 
     @GetMapping("/home")
-    public ModelAndView home(ModelAndView modelAndView, HttpSession session){
+    public ModelAndView home(ModelAndView modelAndView, HttpSession session) {
 
-        if (session.getAttribute("userId") == null){
+        if (session.getAttribute("userId") == null) {
             modelAndView.setViewName("redirect:/login");
-        }else {
-
-            List<DocumentHomeViewModel> models = this.documentService.findAllDocuments()
-                    .stream()
-                    .map(doc -> this.modelmapper.map(doc, DocumentHomeViewModel.class))
-                    .collect(Collectors.toList());
-
-            modelAndView.setViewName("home");
-            modelAndView.addObject("documents", models);
+            return modelAndView;
         }
+
+        List<DocumentHomeViewModel> models = this.documentService.findAllDocuments()
+                .stream()
+                .map(doc -> this.modelmapper.map(doc, DocumentHomeViewModel.class))
+                .collect(Collectors.toList());
+
+        modelAndView.setViewName("home");
+        modelAndView.addObject("documents", models);
+
         return modelAndView;
     }
 
     @GetMapping("/schedule")
-    public ModelAndView schedule(ModelAndView modelAndView){
+    public ModelAndView schedule(ModelAndView modelAndView, HttpSession session) {
+        if (session.getAttribute("userId") == null) {
+            modelAndView.setViewName("redirect:/login");
+            return modelAndView;
+        }
+
         modelAndView.setViewName("schedule");
 
         return modelAndView;
     }
 
     @PostMapping("/schedule")
-    public ModelAndView scheduleConfirm(ModelAndView modelAndView,@ModelAttribute DocumentBindingModel model){
+    public ModelAndView scheduleConfirm(ModelAndView modelAndView, @ModelAttribute DocumentBindingModel model) {
 
         DocumentServiceModel savedModel = this.documentService.saveDocument(this.modelmapper.map(model, DocumentServiceModel.class));
         if (savedModel != null && documentIfValid(savedModel)) {
             modelAndView.setViewName("redirect:/details?id=" + savedModel.getId());
-        }else {
+        } else {
             modelAndView.setViewName("schedule");
         }
         return modelAndView;
@@ -74,26 +80,16 @@ public class LoggedInController {
         return this.validator.validate(savedModel).size() == 0;
     }
 
-    @GetMapping("/print")
-    public ModelAndView print(@ModelAttribute("id") String id, ModelAndView modelAndView){
-
-        DocumentDetailsViewModel model = this.modelmapper.map(this.documentService.findById(id), DocumentDetailsViewModel.class);
-
-        if (model == null){
-            throw new IllegalArgumentException("Wrong id");
-        }else
-
-        modelAndView.setViewName("print");
-        modelAndView.addObject("model", model);
-
-        return modelAndView;
-    }
-
     @GetMapping("/details")
-    public ModelAndView details(@ModelAttribute("id") String id, ModelAndView modelAndView){
+    public ModelAndView details(@ModelAttribute("id") String id, ModelAndView modelAndView, HttpSession session) {
+        if (session.getAttribute("userId") == null) {
+            modelAndView.setViewName("redirect:/login");
+            return modelAndView;
+        }
+
         DocumentDetailsViewModel document = this.modelmapper.map(this.documentService.findById(id), DocumentDetailsViewModel.class);
 
-        if (document == null){
+        if (document == null) {
             throw new IllegalArgumentException("DocumentNotFound");
         }
 
@@ -103,10 +99,29 @@ public class LoggedInController {
         return modelAndView;
     }
 
-    @PostMapping("/print")
-    public ModelAndView printConfirm(@ModelAttribute("id") String id, ModelAndView modelAndView){
+    @GetMapping("/print")
+    public ModelAndView print(@ModelAttribute("id") String id, ModelAndView modelAndView, HttpSession session) {
+        if (session.getAttribute("userId") == null) {
+            modelAndView.setViewName("redirect:/login");
+            return modelAndView;
+        }
 
-        if (this.documentService.findById(id) == null){
+        DocumentDetailsViewModel model = this.modelmapper.map(this.documentService.findById(id), DocumentDetailsViewModel.class);
+
+        if (model == null) {
+            throw new IllegalArgumentException("Wrong id");
+        } else
+
+            modelAndView.setViewName("print");
+        modelAndView.addObject("model", model);
+
+        return modelAndView;
+    }
+
+    @PostMapping("/print")
+    public ModelAndView printConfirm(@ModelAttribute("id") String id, ModelAndView modelAndView) {
+
+        if (this.documentService.findById(id) == null) {
             throw new IllegalArgumentException("DocumentNotFound");
         }
 
