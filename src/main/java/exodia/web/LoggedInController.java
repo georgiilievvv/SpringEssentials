@@ -131,4 +131,15 @@ public class LoggedInController {
 
         return modelAndView;
     }
+    
+    @GetMapping("/logout") 
+    public ModelAndView logout(ModelAndView modelAndView , HttpSession session){ 
+        if (session.getAttribute("userId") == null){ 
+        m   odelAndView.setViewName("redirect:/login"); 
+        } else { 
+            session.invalidate(); 
+            modelAndView.setViewName("redirect:/"); 
+        } 
+        return modelAndView; 
+    } 
 }
